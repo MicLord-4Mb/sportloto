@@ -5,7 +5,7 @@ const { Title, Text } = Typography;
 
 const StatBox = ({ label, value, color = 'blue' }) => {
   return (
-    <Card size='small' bordered={false} className="shadow-sm bg-gray-50 dark:bg-gray-800">
+    <Card size='small' bordered={true} className="shadow-sm bg-gray-50 dark:bg-gray-800">
       <Text type="secondary" className="text-xs uppercase font-semibold block mb-1">
         {label}
       </Text>
