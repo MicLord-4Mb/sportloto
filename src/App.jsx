@@ -8,17 +8,20 @@ function App() {
   
 
   return (
-    <Layout className="min-h-screen transition-colors duration-300" style={{ background: '#f9fafb' }}>
+    // TODO : find how to switch dark/light themes on antD
+    // TODO : add dark mode toggle button
+    
+    <Layout className="min-h-screen transition-colors duration-300" style={{ background: '#f9fafb' }}> 
       <div className="max-w-3xl mx-auto w-full p-4 md:p-8">
       {/* Header */}
-      <Card className="mb-8 shadow-sm rounded-3xl" style={{ width: 300, background: '#e0f7fa' }}>
+      <Card className="mb-8 shadow-sm rounded-3xl" style={{ background: '#e0f7fa' }}>
         <h1 className="text-3xl font-bold text-blue-600 mb-5">
           SPortLoto 5 of 36
         </h1>
       </Card>
 
       {/* Main Content */}
-      <Card className="mb-8 shadow-sm text-center rounded-3xl" style={{ width: 300}}>
+      <Card className="mb-8 shadow-sm text-center rounded-3xl" >
        <Button type="primary">!!! Preeessss Meee !!!!</Button>
       </Card>
       <div>
@@ -28,7 +31,7 @@ function App() {
         <LotteryBall />
         <LotteryBall />
       </div>
-      <Card className="mb-8 shadow-sm text-center rounded-3xl" style={{ width: 300}}>
+      <Card className="mb-8 shadow-sm text-center rounded-3xl" >
         <h2 className="text-2xl font-semibold text-gray-800 mb-4">Statistics</h2>
         <StatBox label="Min value" value={5} />
         <StatBox label="Max value" value={30} />
@@ -36,7 +39,7 @@ function App() {
         <StatBox label="Even count" value={3} color="green" />
         <StatBox label="Odd count" value={2} color="red" />
       </Card>
-      <Card className="mb-8 shadow-sm text-center rounded-3xl" style={{ width: 300}}>
+      <Card className="mb-8 shadow-sm text-center rounded-3xl" >
         <h2 className="text-2xl font-semibold text-gray-800 mb-4">History (Last 5)</h2>
         <p className="text-gray-500">No history yet. Generate your first combination!</p>
       </Card>
