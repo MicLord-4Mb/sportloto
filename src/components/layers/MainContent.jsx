@@ -1,7 +1,7 @@
 import React, { useCallback, useState } from 'react'
 
-import { Button, Layout, Card, Space, Select, Typography, theme as antdTheme } from 'antd';
-import { GlobalOutlined, SunOutlined, MoonOutlined, ShakeOutlined } from '@ant-design/icons';
+import { Button, Layout, Card, Space, Select, Typography, theme as antdTheme, Flex } from 'antd';
+import { GlobalOutlined, SunOutlined, MoonOutlined, ShakeOutlined, BarChartOutlined } from '@ant-design/icons';
 
 import { getStatistic } from '../../utils/math';
 import LotteryBall from '../atoms/LotteryBall';
@@ -80,24 +80,31 @@ const MainContent = ( { isDarkMode, toggleTheme } ) => {
 
           {/* Main Content */}
           <Card className="mb-8 shadow-sm text-center rounded-3xl" >
-            <Button
-              type="primary"
-              size = "large"
-              icon={<ShakeOutlined />}
-              onClick={handleGenerator}
-              className="h-14 px-8 text-lg rounded-fill"
-            >
-              !!! Preeessss Meee !!!!
-            </Button>
-            <div className="flex flex-wrap justify-center gap-3 md:gap-4 mb-8">
-              <LotteryBall number={1} />
-              <LotteryBall number={2} />
-              <LotteryBall number={3} />
-              <LotteryBall number={4} />
-              <LotteryBall number={5} />
-            </div>
-            <Card className="mb-8 shadow-sm text-center rounded-3xl" >
-              <h2 className="text-2xl font-semibold text-gray-800 mb-4">Statistics</h2>
+            <Flex align="center" justify="center" gap='small' >
+              <Button
+                type="primary"
+                size = "large"
+                icon={<ShakeOutlined />}
+                onClick={handleGenerator}
+              >
+                !!! Preeessss Meee !!!!
+              </Button>
+            </Flex>
+
+            {currentResult && (
+              <div className="mt-6">
+                <div className="flex flex-wrap justify-center gap-3 md:gap-4 mb-8">
+                  {currentResult.numbers.map((num, index) => (
+                    <LotteryBall key={index} number={num} />
+                  ))}
+                </div>
+              </div>
+            )}
+
+            <Card className="mt-8 mb-8 shadow-sm text-center rounded-3xl" >
+              <Title level={4} >
+                <BarChartOutlined style={{ color:  `var(--ant-blue)` }} />Statistics
+              </Title>
               <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 mb-6">
                 <StatBox label="Min value" value={currentResult?.stats.min} />
                 <StatBox label="Max value" value={currentResult?.stats.max} />
