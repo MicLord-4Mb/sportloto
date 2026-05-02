@@ -8,13 +8,20 @@ import StatBox from './components/atoms/StatBox';
 
 export default function App() {
 
-  const [isDarkMode, setIsDarkMode] = useState(false);
+  const [isDarkMode, setIsDarkMode] = useState( () => {
+    if (typeof window !== 'undefined' && window.matchMedia) {
+      return window.matchMedia('(prefers-color-scheme: dark)').matches;
+    }
+    return false;
+  });
   const [lang, setLang] = useState('en');
 
   useEffect(() => {
-    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-      setIsDarkMode(true);
-    }
+    const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+    const handleChange = (e) => setIsDarkMode(e.matches);
+    
+    mediaQuery.addEventListener('change', handleChange);
+    return () => mediaQuery.removeEventListener('change', handleChange);
   }, []);
 
   useEffect(() => {
@@ -28,8 +35,6 @@ export default function App() {
   const toggleTheme = () => setIsDarkMode(!isDarkMode);
   
   return (
-    // TODO : find how to switch dark/light themes on antD
-    // TODO : add dark mode toggle button
     <ConfigProvider
       theme={{
         algorithm: isDarkMode ? antdTheme.darkAlgorithm : antdTheme.defaultAlgorithm,
@@ -38,7 +43,6 @@ export default function App() {
         },
       }}
     > 
-
 
       <Layout className="min-h-screen transition-colors duration-300">  {/* style={{ background: '#f9fafb' }} */}
         <div className="max-w-3xl mx-auto w-full p-4 md:p-8">
