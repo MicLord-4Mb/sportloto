@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from 'react';
 
-import { Button, Layout, Card, ConfigProvider, theme as antdTheme, Space, Select } from 'antd';
-import { GlobalOutlined, SunOutlined, MoonOutlined } from '@ant-design/icons';
+import { Button, Layout, Card, ConfigProvider, theme as antdTheme, Space, Select, Typography } from 'antd';
+import { GlobalOutlined, SunOutlined, MoonOutlined, ShakeOutlined } from '@ant-design/icons';
 
 import LotteryBall from './components/atoms/LotteryBall';
 import StatBox from './components/atoms/StatBox';
+
+const { Title, Text } = Typography;
+const { Header, Content } = Layout;
 
 export default function App() {
 
@@ -50,9 +53,11 @@ export default function App() {
           {/* Header */}
           <Card className="mb-8 shadow-sm rounded-3xl"> {/* style={{ background: '#e0f7fa' }} */}
             <div className="flex flex-col md:flex-row items-center justify-between">
-              <h1 className="text-3xl font-bold text-blue-600 mb-5">
+              {/* <h1 className="text-3xl font-bold text-blue-600(155DFC) mb-5"> */}
+              <Title level={3} style={{ color: `var(--ant-blue)` }} >
+                <ShakeOutlined className="mr-2" />
                 SPortLoto 5 of 36
-              </h1>
+              </Title>
               <Space>
                 <GlobalOutlined />
                 <Select value={lang} onChange={setLang} variant="borderless" style={{ width: 100 }}>
@@ -83,11 +88,13 @@ export default function App() {
         </div>
         <Card className="mb-8 shadow-sm text-center rounded-3xl" >
           <h2 className="text-2xl font-semibold text-gray-800 mb-4">Statistics</h2>
-          <StatBox label="Min value" value={5} />
-          <StatBox label="Max value" value={30} />
-          <StatBox label="Average" value={18.4} />
-          <StatBox label="Even count" value={3} color="green" />
-          <StatBox label="Odd count" value={2} color="red" />
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 mb-6">
+            <StatBox label="Min value" value={5} />
+            <StatBox label="Max value" value={30} />
+            <StatBox label="Average" value={18.4} />
+            <StatBox label="Even count" value={3} color="green" />
+            <StatBox label="Odd count" value={2} color="red" />
+          </div>
         </Card>
         <Card className="mb-8 shadow-sm text-center rounded-3xl" >
           <h2 className="text-2xl font-semibold text-gray-800 mb-4">History (Last 5)</h2>
