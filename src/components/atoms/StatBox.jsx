@@ -1,17 +1,14 @@
-import {Card, Typography} from 'antd'
 import React from 'react'
+import { Card, Statistic } from 'antd'
 
-const { Title, Text } = Typography;
-
-const StatBox = ({ label, value, color = 'blue' }) => {
+const StatBox = ({ label, value, color }) => {
   return (
-    <Card size='small' bordered={true} className="shadow-sm bg-gray-50 dark:bg-gray-800">
-      <Text type="secondary" className="text-xs uppercase font-semibold block mb-1">
-        {label}
-      </Text>
-      <Title level={4} style={{ margin: 0, color: `var(--ant-${color})` }}>
-        {value}
-      </Title>
+    <Card size="small" variant="outlined" style={{ flex: 1, minWidth: 100 }}>
+      <Statistic
+        title={label}
+        value={value ?? '—'}
+        valueStyle={{ color: color || 'inherit', fontSize: 20 }}
+      />
     </Card>
   )
 }
