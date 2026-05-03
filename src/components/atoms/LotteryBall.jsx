@@ -1,11 +1,21 @@
 import React from 'react'
+import { Avatar } from 'antd'
 
-const LotteryBall = ({number}) => {
+const LotteryBall = ({ number }) => {
   return (
-    <div
-      className="w-14 h-14 md:w-16 md:h-16 rounded-full bg-gradient-to-br from-blue-500 to-blue-700 text-white flex items-center justify-center text-2xl font-black shadow-inner border-4 border-blue-200">
+    <Avatar
+      size={60}
+      style={{
+        background: 'linear-gradient(135deg, #1677ff 0%, #003eb3 100%)',
+        fontSize: 20,
+        fontWeight: 900,
+        flexShrink: 0,
+        boxShadow: 'inset 0 2px 8px rgba(0,0,0,0.25), 0 4px 12px rgba(22,119,255,0.35)',
+        border: '3px solid rgba(255,255,255,0.25)',
+      }}
+    >
       {number}
-    </div>
+    </Avatar>
   )
 }
 
