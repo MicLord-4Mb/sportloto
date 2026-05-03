@@ -56,7 +56,7 @@ const MainContent = ( { isDarkMode, toggleTheme } ) => {
             <div className="flex flex-col md:flex-row items-center justify-between">
               <Title level={3} style={{ color: `var(--ant-blue)` }} >
                 <ShakeOutlined className="mr-2" />
-                SPortLoto 5 of 36
+                SportLoto 5 of 36
               </Title>
               <Space>
                 <div className="flex items-center gap-2 p-1 rounded-lg transition-colors" 
