@@ -4,6 +4,7 @@ import { Button, Layout, Card, Space, Select, Typography, theme as antdTheme, Fl
 import { GlobalOutlined, SunOutlined, MoonOutlined, ShakeOutlined, BarChartOutlined, HistoryOutlined } from '@ant-design/icons';
 
 import { getStatistic } from '../../utils/math';
+import { translations } from '../../locales/translations';
 import LotteryBall from '../atoms/LotteryBall';
 import StatBox from '../atoms/StatBox';
 
@@ -13,10 +14,12 @@ const MainContent = ( { isDarkMode, toggleTheme } ) => {
   const { Header, Content } = Layout;
   const { useToken } = antdTheme;
   const { token } = useToken();
-
-  const [lang, setLang] = useState('en');
+ 
   const [currentResult, setCurrentResult] = useState(null);
   const [history, setHistory] = useState([]);
+  const [lang, setLang] = useState('en');
+
+  const t = translations[lang];
 
   const handleGenerator = useCallback(() => {
     // Logic to generate lottery numbers and update statistics
@@ -58,7 +61,7 @@ const MainContent = ( { isDarkMode, toggleTheme } ) => {
             <div className="flex flex-col md:flex-row items-center justify-between">
               <Title level={3} style={{ color: `var(--ant-blue)` }} >
                 <ShakeOutlined className="mr-2" />
-                SportLoto 5 of 36
+                {t.title} {/*SportLoto 5 of 36*/}
               </Title>
               <Space>
                 <div className="flex items-center gap-2 p-1 rounded-lg transition-colors" 
@@ -89,7 +92,7 @@ const MainContent = ( { isDarkMode, toggleTheme } ) => {
                 icon={<ShakeOutlined />}
                 onClick={handleGenerator}
               >
-                !!! Preeessss Meee !!!!
+                {t.generateBtn}
               </Button>
             </Flex>
 
@@ -105,14 +108,14 @@ const MainContent = ( { isDarkMode, toggleTheme } ) => {
 
             <Card className="mt-8 mb-8 shadow-sm text-center rounded-3xl" >
               <Title level={4} >
-                <BarChartOutlined style={{ color:  `var(--ant-blue)` }} />Statistics
+                <BarChartOutlined style={{ color:  `var(--ant-blue)` }} />{t.statsTitle}
               </Title>
               <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 mb-6">
-                <StatBox label="Min value" value={currentResult?.stats.min} />
-                <StatBox label="Max value" value={currentResult?.stats.max} />
-                <StatBox label="Average" value={currentResult?.stats.average} />
-                <StatBox label="Even count" value={currentResult?.stats.even} color="green" />
-                <StatBox label="Odd count" value={currentResult?.stats.odd} color="red" />
+                <StatBox label={t.min} value={currentResult?.stats.min} />
+                <StatBox label={t.max} value={currentResult?.stats.max} />
+                <StatBox label={t.avg} value={currentResult?.stats.average} />
+                <StatBox label={t.even} value={currentResult?.stats.even} color="green" />
+                <StatBox label={t.odd} value={currentResult?.stats.odd} color="red" />
               </div>
             </Card>
           </Card>
@@ -121,12 +124,12 @@ const MainContent = ( { isDarkMode, toggleTheme } ) => {
 <Card style={{ marginBottom: 0, textAlign: 'center' }}>
             <Title level={4} style={{ marginBottom: 16 }}>
               <HistoryOutlined style={{ marginRight: 8 }} />
-              History (Last 5)
+              {t.historyTitle}
             </Title>
 
             {history.length === 0 ? (
               <Text type="secondary">
-                No history yet. Generate your first combination!
+                {t.emptyHistory}
               </Text>
             ) : (
               <Flex vertical gap="small">
