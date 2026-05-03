@@ -1,7 +1,7 @@
 import React, { useCallback, useState } from 'react'
 
 import { Button, Layout, Card, Space, Select, Typography, theme as antdTheme, Flex } from 'antd';
-import { GlobalOutlined, SunOutlined, MoonOutlined, ShakeOutlined, BarChartOutlined } from '@ant-design/icons';
+import { GlobalOutlined, SunOutlined, MoonOutlined, ShakeOutlined, BarChartOutlined, HistoryOutlined } from '@ant-design/icons';
 
 import { getStatistic } from '../../utils/math';
 import LotteryBall from '../atoms/LotteryBall';
@@ -16,6 +16,7 @@ const MainContent = ( { isDarkMode, toggleTheme } ) => {
 
   const [lang, setLang] = useState('en');
   const [currentResult, setCurrentResult] = useState(null);
+  const [history, setHistory] = useState([]);
 
   const handleGenerator = useCallback(() => {
     // Logic to generate lottery numbers and update statistics
@@ -44,6 +45,7 @@ const MainContent = ( { isDarkMode, toggleTheme } ) => {
     const newEntry = { id: Date.now(), numbers: selectedNumbers, stats };
 
     setCurrentResult(newEntry);
+    setHistory(prev => [newEntry, ...prev].slice(0, 5)); // keep only last 5 entries in history
 
   }, []);
   
@@ -114,9 +116,36 @@ const MainContent = ( { isDarkMode, toggleTheme } ) => {
               </div>
             </Card>
           </Card>
-          <Card className="mb-8 shadow-sm text-center rounded-3xl" >
-            <h2 className="text-2xl font-semibold text-gray-800 mb-4">History (Last 5)</h2>
-            <p className="text-gray-500">No history yet. Generate your first combination!</p>
+
+          {/* History Section */}
+<Card style={{ marginBottom: 0, textAlign: 'center' }}>
+            <Title level={4} style={{ marginBottom: 16 }}>
+              <HistoryOutlined style={{ marginRight: 8 }} />
+              History (Last 5)
+            </Title>
+
+            {history.length === 0 ? (
+              <Text type="secondary">
+                No history yet. Generate your first combination!
+              </Text>
+            ) : (
+              <Flex vertical gap="small">
+                {history.map((entry) => (
+                  <Card
+                    key={entry.id}
+                    size="small"
+                    variant="outlined"
+                    style={{ borderRadius: 12 }}
+                  >
+                    <Flex align="center" justify="center" gap="small" wrap>
+                      {entry.numbers.map((num, idx) => (
+                        <LotteryBall key={idx} number={num} />
+                      ))}
+                    </Flex>
+                  </Card>
+                ))}
+              </Flex>
+            )}
           </Card>
         </div> 
       </Layout>
