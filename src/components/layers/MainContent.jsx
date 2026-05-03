@@ -57,7 +57,7 @@ const MainContent = ( { isDarkMode, toggleTheme } ) => {
       setHistory(prev => [newEntry, ...prev].slice(0, 5)); // keep only last 5 entries in history
       
       setIsAnimating(false);
-    }, 400); // Simulate animation duration
+    }, 800); // Simulate animation duration
   }, []);
   
   return (
@@ -109,7 +109,12 @@ const MainContent = ( { isDarkMode, toggleTheme } ) => {
               <div className="mt-6">
                 <div className="flex flex-wrap justify-center gap-3 md:gap-4 mb-8">
                   {currentResult.numbers.map((num, index) => (
-                    <LotteryBall key={`${currentResult.id}-${index}`} number={num} style={{ animationDelay: `${index * 0.1}s` }} />
+                    <LotteryBall 
+                      key={`${currentResult.id}-${index}`}
+                      number={num}
+                      animated={isAnimating} 
+                      animationDelay={index * 0.1}
+                    />
                   ))}
                 </div>
               </div>
@@ -130,6 +135,7 @@ const MainContent = ( { isDarkMode, toggleTheme } ) => {
           </Card>
 
           {/* History Section */}
+          // TODO: make balls in history section smaller and without animation, and maybe add some stats for each entry in history (like min, max, average)
           <Card style={{ marginBottom: 0, textAlign: 'center' }}>
             <Title level={4} style={{ marginBottom: 16 }}>
               <HistoryOutlined style={{ marginRight: 8 }} />
@@ -151,7 +157,7 @@ const MainContent = ( { isDarkMode, toggleTheme } ) => {
                   >
                     <Flex align="center" justify="center" gap="small" wrap>
                       {entry.numbers.map((num, idx) => (
-                        <LotteryBall key={idx} number={num} />
+                        <LotteryBall key={idx} number={num} animated={false} />
                       ))}
                     </Flex>
                   </Card>
@@ -164,9 +170,6 @@ const MainContent = ( { isDarkMode, toggleTheme } ) => {
             @keyframes bounce-short {
               0%, 100% { transform: translateY(0); }
               50% { transform: translateY(-15px); }
-
-            // .animate-bounce-short {
-            //   animation: bounce-short 0.5s ease-in-out 1;
             }
           `}} />
         </div> 

@@ -1,7 +1,7 @@
 import React from 'react'
 import { Avatar } from 'antd'
 
-const LotteryBall = ({ number }) => {
+const LotteryBall = ({ number, animated = false, animationDelay = 0 }) => {
   return (
     <Avatar
       size={60}
@@ -12,7 +12,9 @@ const LotteryBall = ({ number }) => {
         flexShrink: 0,
         boxShadow: 'inset 0 2px 8px rgba(0,0,0,0.25), 0 4px 12px rgba(22,119,255,0.35)',
         border: '3px solid rgba(255,255,255,0.25)',
-        animation: 'bounce-short 0.5s ease-in-out 1'
+        animation: animated
+          ? `bounce-short 0.5s ease-in-out 1 ${animationDelay}s both`
+          : 'none',
       }}
     >
       {number}
