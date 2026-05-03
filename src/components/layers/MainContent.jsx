@@ -18,38 +18,46 @@ const MainContent = ( { isDarkMode, toggleTheme } ) => {
   const [currentResult, setCurrentResult] = useState(null);
   const [history, setHistory] = useState([]);
   const [lang, setLang] = useState('en');
+  const [isAnimating, setIsAnimating] = useState(false);
 
+  // todo: add direction: rtl for hebrew language, and maybe some specific styles for it (like different font)
   const t = translations[lang];
+  const isRtl = lang === 'he';
 
   const handleGenerator = useCallback(() => {
-    // Logic to generate lottery numbers and update statistics
+    setIsAnimating(true);
 
-    // Example: Generate 5 random numbers between 1 and 36
-    // const numberArray = Array.from({ length: 36 }, (_, i) => i + 1);
-    // const shuffled = numberArray.sort(() => 0.5 - Math.random());
-    // const selectedNumbers = shuffled.slice(0, 5).sort((a, b) => b - a);
+    setTimeout(() => {
+      // Logic to generate lottery numbers and update statistics
 
-    const numberArray = Array.from({ length: 36 }, (_, i) => i + 1);
-    // simple shuffle
-    for (let i = numberArray.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [numberArray[i], numberArray[j]] = [numberArray[j], numberArray[i]];
-    }
-    // take first 5 and sort in descending order
-    const selectedNumbers = numberArray.slice(0, 5).sort((a, b) => b - a);
+      // Example: Generate 5 random numbers between 1 and 36
+      // const numberArray = Array.from({ length: 36 }, (_, i) => i + 1);
+      // const shuffled = numberArray.sort(() => 0.5 - Math.random());
+      // const selectedNumbers = shuffled.slice(0, 5).sort((a, b) => b - a);
 
-    console.log('Generated numbers:', selectedNumbers);
+      const numberArray = Array.from({ length: 36 }, (_, i) => i + 1);
+      // simple shuffle
+      for (let i = numberArray.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [numberArray[i], numberArray[j]] = [numberArray[j], numberArray[i]];
+      }
+      // take first 5 and sort in descending order
+      const selectedNumbers = numberArray.slice(0, 5).sort((a, b) => b - a);
 
-    const stats = getStatistic(selectedNumbers);
-    console.log('Statistics:', stats);
+      console.log('Generated numbers:', selectedNumbers);
 
-    // TODO: make history of generated numbers and statistics, and display it in the history section
-    // Example of new entry for history
-    const newEntry = { id: Date.now(), numbers: selectedNumbers, stats };
+      const stats = getStatistic(selectedNumbers);
+      console.log('Statistics:', stats);
 
-    setCurrentResult(newEntry);
-    setHistory(prev => [newEntry, ...prev].slice(0, 5)); // keep only last 5 entries in history
+      // TODO: make history of generated numbers and statistics, and display it in the history section
+      // Example of new entry for history
+      const newEntry = { id: Date.now(), numbers: selectedNumbers, stats };
 
+      setCurrentResult(newEntry);
+      setHistory(prev => [newEntry, ...prev].slice(0, 5)); // keep only last 5 entries in history
+      
+      setIsAnimating(false);
+    }, 400); // Simulate animation duration
   }, []);
   
   return (
@@ -89,8 +97,9 @@ const MainContent = ( { isDarkMode, toggleTheme } ) => {
               <Button
                 type="primary"
                 size = "large"
-                icon={<ShakeOutlined />}
+                icon={<ShakeOutlined spin={isAnimating} />}
                 onClick={handleGenerator}
+                loading={isAnimating}
               >
                 {t.generateBtn}
               </Button>
@@ -100,7 +109,7 @@ const MainContent = ( { isDarkMode, toggleTheme } ) => {
               <div className="mt-6">
                 <div className="flex flex-wrap justify-center gap-3 md:gap-4 mb-8">
                   {currentResult.numbers.map((num, index) => (
-                    <LotteryBall key={index} number={num} />
+                    <LotteryBall key={`${currentResult.id}-${index}`} number={num} style={{ animationDelay: `${index * 0.1}s` }} />
                   ))}
                 </div>
               </div>
@@ -121,7 +130,7 @@ const MainContent = ( { isDarkMode, toggleTheme } ) => {
           </Card>
 
           {/* History Section */}
-<Card style={{ marginBottom: 0, textAlign: 'center' }}>
+          <Card style={{ marginBottom: 0, textAlign: 'center' }}>
             <Title level={4} style={{ marginBottom: 16 }}>
               <HistoryOutlined style={{ marginRight: 8 }} />
               {t.historyTitle}
@@ -150,6 +159,16 @@ const MainContent = ( { isDarkMode, toggleTheme } ) => {
               </Flex>
             )}
           </Card>
+
+          <style dangerouslySetInnerHTML={{__html: `
+            @keyframes bounce-short {
+              0%, 100% { transform: translateY(0); }
+              50% { transform: translateY(-15px); }
+
+            // .animate-bounce-short {
+            //   animation: bounce-short 0.5s ease-in-out 1;
+            }
+          `}} />
         </div> 
       </Layout>
   )
