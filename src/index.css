@@ -1,5 +1,15 @@
-/* * {
+/* 
+* {
     outline: 1px solid red;
 }
- */
+*/
 
+@keyframes bounce-short {
+    0%, 100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-15px);
+    }
+}

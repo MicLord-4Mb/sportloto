@@ -59,13 +59,6 @@ const MainContent = ({ isDarkMode, toggleTheme }) => {
         />
         <HistorySection history={history} curLang={curLang} />
       </div>
-
-      <style dangerouslySetInnerHTML={{ __html: `
-        @keyframes bounce-short {
-          0%, 100% { transform: translateY(0); }
-          50%       { transform: translateY(-15px); }
-        }
-      `}} />
     </Layout>
   )
 }
