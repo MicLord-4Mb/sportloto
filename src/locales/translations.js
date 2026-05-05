@@ -1,7 +1,6 @@
-// TODO: think about history of roll dices, maybe add some charts with stats, etc. (for example, how many times each number was rolled, etc.)
 export const translations = {
   en: {
-    title: "Sportloto 5 of 36",
+    titleTemplate: (count, max) => `Sportloto ${count} of ${max}`,
     generateBtn: "Generate Numbers",
     statsTitle: "Statistics",
     historyTitle: "History (Last 5)",
@@ -14,7 +13,7 @@ export const translations = {
     lang: "Language",
   },
   ru: {
-    title: "Спортлото 5 из 36",
+    titleTemplate: (count, max) => `Спортлото ${count} из ${max}`,
     generateBtn: "Сгенерировать числа",
     statsTitle: "Статистика",
     historyTitle: "История (Последние 5)",
@@ -27,7 +26,7 @@ export const translations = {
     lang: "Язык",
   },
   he: {
-    title: "ספורטלוטו 5 מתוך 36",
+    titleTemplate: (count, max) => `ספורטלוטו ${count} מתוך ${max}`,
     generateBtn: "הגרל מספרים",
     statsTitle: "סטטיסטיקה",
     historyTitle: "היסטוריה (5 אחרונים)",

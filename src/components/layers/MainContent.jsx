@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { Layout } from 'antd'
 import { getStatistic, getRandomNumbers } from '../../utils/math'
 import { translations } from '../../locales/translations'
@@ -16,8 +16,15 @@ const MainContent = ({ isDarkMode, toggleTheme }) => {
   const [lang, setLang] = useState('en')
   const [isAnimating, setIsAnimating] = useState(false)
 
-  const curLang = translations[lang]
+  const curLang = {
+    ...translations[lang],
+    title: translations[lang].titleTemplate(GAME_OPTIONS.count, GAME_OPTIONS.max).toUpperCase()
+  }
   const isRtl = lang === 'he'
+
+  useEffect(() => {
+    document.title = curLang.title
+  }, [curLang.title])
 
   const handleGenerate = useCallback(() => {
     setIsAnimating(true)
