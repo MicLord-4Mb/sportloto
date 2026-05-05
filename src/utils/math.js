@@ -13,3 +13,16 @@ export const getStatistic = (arr) => {
     odd: oddCount
   };
 };
+
+export const getRandomNumbers = (count, min=1, max=36) => {
+  const pool = Array.from({ length: max - min + 1 }, (_, i) => i + min);
+
+  // Fisher-Yates shuffle
+  for (let i = pool.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [pool[i], pool[j]] = [pool[j], pool[i]];
+  }
+
+  const numbers = pool.slice(0, count).sort((a, b) => b - a);
+  return numbers;
+};

@@ -1,6 +1,6 @@
 import React, { useCallback, useState } from 'react'
 import { Layout } from 'antd'
-import { getStatistic } from '../../utils/math'
+import { getStatistic, getRandomNumbers } from '../../utils/math'
 import { translations } from '../../locales/translations'
 import AppHeader from '../organisms/AppHeader'
 import GeneratorSection from '../organisms/GeneratorSection'
@@ -8,6 +8,7 @@ import HistorySection from '../organisms/HistorySection'
 
 const HISTORY_LIMIT = 5
 const ANIMATION_DELAY_MS = 800
+const GAME_OPTIONS = { count: 5, min: 1, max: 36 }
 
 const MainContent = ({ isDarkMode, toggleTheme }) => {
   const [currentResult, setCurrentResult] = useState(null)
@@ -22,15 +23,8 @@ const MainContent = ({ isDarkMode, toggleTheme }) => {
     setIsAnimating(true)
 
     setTimeout(() => {
-      const pool = Array.from({ length: 36 }, (_, i) => i + 1)
 
-      // Fisher-Yates shuffle
-      for (let i = pool.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1))
-        ;[pool[i], pool[j]] = [pool[j], pool[i]]
-      }
-
-      const numbers = pool.slice(0, 5).sort((a, b) => b - a)
+      const numbers = getRandomNumbers(...Object.values(GAME_OPTIONS))
       const stats = getStatistic(numbers)
       const entry = { id: Date.now(), numbers, stats }
 
